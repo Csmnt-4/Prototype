@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://dj0j38cxyrwnj"]
+[gd_scene load_steps=18 format=3 uid="uid://dj0j38cxyrwnj"]
 
 [ext_resource type="Script" path="res://scene/world.gd" id="1_3puym"]
 [ext_resource type="PackedScene" uid="uid://dt1isj2atp4r4" path="res://player/player.tscn" id="1_tqd05"]
@@ -8,8 +8,11 @@
 [ext_resource type="Script" path="res://scene/followCam.gd" id="5_2gcg3"]
 [ext_resource type="Texture2D" uid="uid://commshaukq5yh" path="res://art/PropNature.png" id="5_vhwu2"]
 [ext_resource type="PackedScene" uid="uid://g22rock0hgff" path="res://enemies/mons.tscn" id="6_3102a"]
-[ext_resource type="PackedScene" uid="uid://b8ndt4emcfakg" path="res://chest.tscn" id="6_cebc5"]
+[ext_resource type="PackedScene" uid="uid://b8ndt4emcfakg" path="res://Chest.tscn" id="6_cebc5"]
 [ext_resource type="PackedScene" uid="uid://dej7jhx2703un" path="res://gui/heartsContainer.tscn" id="7_n7k2x"]
+[ext_resource type="PackedScene" uid="uid://bqj8c4h6v8vdd" path="res://enemies/lettuce.tscn" id="10_f8bwv"]
+[ext_resource type="PackedScene" uid="uid://b5h5o54dhl40a" path="res://enemies/cheese.tscn" id="11_7xt2a"]
+[ext_resource type="PackedScene" uid="uid://bey32xxcdr024" path="res://enemies/tomato.tscn" id="12_0ckir"]
 
 [sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_dcnmf"]
 scenes/1/scene = ExtResource("2_dejgs")
@@ -253,6 +256,28 @@ endPoint = NodePath("../Mons/Marker2D")
 
 [node name="Marker2D" type="Marker2D" parent="TileMap/Mons2"]
 position = Vector2(1, -58)
+
+[node name="Lettuce" parent="TileMap" node_paths=PackedStringArray("endPoint") instance=ExtResource("10_f8bwv")]
+position = Vector2(294.905, 80.3782)
+endPoint = NodePath("Marker2D")
+
+[node name="Marker2D" type="Marker2D" parent="TileMap/Lettuce"]
+position = Vector2(-0.966873, 66.6293)
+
+[node name="Cheese" parent="TileMap" node_paths=PackedStringArray("endPoint") instance=ExtResource("11_7xt2a")]
+position = Vector2(394.496, 193.542)
+endPoint = NodePath("Marker2D")
+
+[node name="Marker2D" type="Marker2D" parent="TileMap/Cheese"]
+position = Vector2(4.83454, -68.7445)
+
+[node name="Tomato" parent="TileMap" node_paths=PackedStringArray("endPoint") instance=ExtResource("12_0ckir")]
+position = Vector2(187.579, 235.847)
+endPoint = NodePath("Marker2D")
+
+[node name="Marker2D" type="Marker2D" parent="TileMap/Tomato"]
+position = Vector2(40.6099, -5.28804)
+scale = Vector2(0.966903, 1.05761)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 

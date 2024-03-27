@@ -8,7 +8,7 @@ extends CharacterBody2D
 
 var startPosition: Vector2
 var endPosition: Vector2
-
+"endPoint"
 var isDead: bool = false
 
 var playerChase = false
@@ -36,13 +36,8 @@ func updateAnimation():
 	if velocity.length() == 0:
 		if animations.is_playing():
 			animations.stop()
-	else:
-		var direction: String = "Down"
-		if velocity.x < 0:  direction = "Left"
-		elif velocity.x > 0: direction = "Right"
-		elif velocity.y < 0: direction = "Up"
-		
-		animations.play("walk"+direction)	
+	else:		
+		animations.play("walk")	
 	
 func _physics_process(delta):
 	if isDead: return

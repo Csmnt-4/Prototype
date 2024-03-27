@@ -1,0 +1,56 @@
+[gd_scene load_steps=6 format=3 uid="uid://df3b6u1glf712"]
+
+[ext_resource type="Script" path="res://weapons/Spoon.gd" id="1_y0qdd"]
+[ext_resource type="Texture2D" uid="uid://rk5di5ielm16" path="res://art/KitchenHell_Weapons_Fork_Attack_1.png" id="2_g6cc5"]
+
+[sub_resource type="Animation" id="Animation_rctpg"]
+resource_name = "Attack_1"
+length = 0.8
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6, 7]
+}
+
+[sub_resource type="Animation" id="Animation_7m0h5"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_1d2mw"]
+_data = {
+"Attack_1": SubResource("Animation_rctpg"),
+"RESET": SubResource("Animation_7m0h5")
+}
+
+[node name="Spoon" type="Area2D"]
+script = ExtResource("1_y0qdd")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_1d2mw")
+}
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_g6cc5")
+hframes = 3
+vframes = 3

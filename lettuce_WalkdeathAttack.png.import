@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bln4ikcalamqs"
-path="res://.godot/imported/SpriteSheet.png-1d234fc060cd940f420ce658712c3b6d.ctex"
+uid="uid://f8hdhigboyni"
+path="res://.godot/imported/lettuce_WalkdeathAttack.png-39863e8173c829b94e8b2e27a3a85cc6.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://art/SpriteSheet.png"
-dest_files=["res://.godot/imported/SpriteSheet.png-1d234fc060cd940f420ce658712c3b6d.ctex"]
+source_file="res://lettuce_WalkdeathAttack.png"
+dest_files=["res://.godot/imported/lettuce_WalkdeathAttack.png-39863e8173c829b94e8b2e27a3a85cc6.ctex"]
 
 [params]
 

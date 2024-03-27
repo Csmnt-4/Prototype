@@ -1,0 +1,87 @@
+[gd_scene load_steps=10 format=3 uid="uid://bey32xxcdr024"]
+
+[ext_resource type="Script" path="res://enemies/mons.gd" id="1_t6db2"]
+[ext_resource type="Texture2D" uid="uid://cc4vd18ikf30a" path="res://art/HellKitchen_Tomato-SheeItIdle.png" id="2_1h6ly"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ic04a"]
+radius = 21.0
+height = 44.0
+
+[sub_resource type="Animation" id="Animation_rs0r1"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_plnvb"]
+resource_name = "walk"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_e1aqi"]
+_data = {
+"RESET": SubResource("Animation_rs0r1"),
+"walk": SubResource("Animation_plnvb")
+}
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_mkq6b"]
+radius = 20.6155
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_582c7"]
+radius = 21.095
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_s6l80"]
+radius = 121.264
+
+[node name="Tomato" type="CharacterBody2D"]
+script = ExtResource("1_t6db2")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 3)
+shape = SubResource("CapsuleShape2D_ic04a")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_e1aqi")
+}
+
+[node name="hitBox" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="hitBox"]
+shape = SubResource("CircleShape2D_mkq6b")
+
+[node name="hurtBox" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="hurtBox"]
+shape = SubResource("CircleShape2D_582c7")
+
+[node name="detectionArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="detectionArea"]
+shape = SubResource("CircleShape2D_s6l80")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(2, -3)
+texture = ExtResource("2_1h6ly")
+hframes = 3
+vframes = 2

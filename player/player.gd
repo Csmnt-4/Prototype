@@ -8,8 +8,13 @@ signal healthChanged
 @export var speed: int = 35
 @onready var animations = $AnimationPlayer
 @onready var effect = $effectAnimation
+@onready var standAnimation = $StandAnimationPlayer
 @onready var hurtBox = $hurtBox
 @onready var hurtTimer = $hurtTimer
+@onready var headSprite = $HeadSprite
+@onready var feetSprite = $FeetSprite
+@onready var standSprite = $StandSprite
+@onready var handSprite = $HandSprite
 
 @onready var rayCast = $RayCast2D
 
@@ -56,9 +61,11 @@ func handleInput():
 		await animations.animation_finished
 		#weaponH.visible = false
 		weaponH.disable()
+		weaponH.primary_attack()
 		isAtking = false
 
 	if Input.is_action_just_pressed("atk2"):	#RM
+		weaponH.secondary_attack()
 		print_debug("atk2")
 	
 	if Input.is_action_just_pressed("interact"): #E
@@ -68,7 +75,10 @@ func handleInput():
 	if Input.is_action_just_pressed("specialMove"): #SPACE
 		print_debug("specialMove")
 		velocity = currenctDirection*1000
-
+	
+	if Input.is_action_just_pressed("weapon_change_scroll"):
+		print_debug("change weapon")
+		weaponH.change_weapon()
 
 func updateAnimation():
 	if isAtking: return
@@ -76,6 +86,7 @@ func updateAnimation():
 	if velocity.length() == 0:
 		if animations.is_playing():
 			animations.stop()
+			standAnimation.stop()
 	else:
 		var direction: String = "Down"
 		if velocity.x < 0:  direction = "Left"
@@ -83,6 +94,7 @@ func updateAnimation():
 		elif velocity.y < 0: direction = "Up"
 		
 		animations.play("walk"+direction)
+		standAnimation.play("walk")
 		#lastAnimDirection = direction
 
 func handleCollision():
@@ -96,10 +108,15 @@ func _physics_process(delta):
 	facingDir = get_global_mouse_position()
 	var facing_angle_rad = atan2(position.y - get_global_mouse_position().y, 
 		position.x - get_global_mouse_position().x)
-	facingAngleDeg = facing_angle_rad/PI*180
-	weaponH.rotation_degrees = facingAngleDeg
 
-		
+	facingAngleDeg = facing_angle_rad/PI*180
+	#weaponH.rotation_degrees = facingAngleDeg
+	#headSprite.rotation_degrees = facingAngleDeg
+	#feetSprite.rotation_degrees = facingAngleDeg
+	#standSprite.rotation_degrees = facingAngleDeg
+	#handSprite.rotation_degrees = facingAngleDeg
+	rotation_degrees = facingAngleDeg
+	
 	handleInput()
 	move_and_slide()
 	handleCollision()

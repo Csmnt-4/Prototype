@@ -1,7 +1,9 @@
-[gd_scene load_steps=10 format=3 uid="uid://bey32xxcdr024"]
+[gd_scene load_steps=14 format=3 uid="uid://bey32xxcdr024"]
 
-[ext_resource type="Script" path="res://enemies/mons.gd" id="1_t6db2"]
+[ext_resource type="Script" path="res://enemies/tomato.gd" id="1_hoffn"]
 [ext_resource type="Texture2D" uid="uid://cc4vd18ikf30a" path="res://art/HellKitchen_Tomato-SheeItIdle.png" id="2_1h6ly"]
+[ext_resource type="PackedScene" uid="uid://b18mbr0rtm5w1" path="res://enemies/tomatoprojectile.tscn" id="2_lq106"]
+[ext_resource type="Texture2D" uid="uid://dkud3wfv863fc" path="res://art/death.png" id="4_tly7o"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ic04a"]
 radius = 21.0
@@ -21,6 +23,18 @@ tracks/0/keys = {
 "update": 1,
 "values": [0]
 }
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("DeathFXSprite:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [1]
+}
 
 [sub_resource type="Animation" id="Animation_plnvb"]
 resource_name = "walk"
@@ -38,9 +52,50 @@ tracks/0/keys = {
 "values": [0, 1, 2, 3, 4]
 }
 
+[sub_resource type="Animation" id="Animation_yykf7"]
+resource_name = "deathAnimation"
+length = 0.6
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("DeathFXSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("DeathFXSprite:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite2D:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_e1aqi"]
 _data = {
 "RESET": SubResource("Animation_rs0r1"),
+"deathAnimation": SubResource("Animation_yykf7"),
 "walk": SubResource("Animation_plnvb")
 }
 
@@ -51,10 +106,18 @@ radius = 20.6155
 radius = 21.095
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_s6l80"]
-radius = 121.264
+radius = 125.0
 
-[node name="Tomato" type="CharacterBody2D"]
-script = ExtResource("1_t6db2")
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_fgo6v"]
+radius = 78.0
+height = 156.0
+
+[node name="Tomato" type="CharacterBody2D" node_paths=PackedStringArray("attackSpeedTimer")]
+collision_layer = 2
+collision_mask = 2
+script = ExtResource("1_hoffn")
+projectile = ExtResource("2_lq106")
+attackSpeedTimer = NodePath("AtkSpeed")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 3)
@@ -71,6 +134,8 @@ libraries = {
 shape = SubResource("CircleShape2D_mkq6b")
 
 [node name="hurtBox" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="hurtBox"]
 shape = SubResource("CircleShape2D_582c7")
@@ -85,3 +150,25 @@ position = Vector2(2, -3)
 texture = ExtResource("2_1h6ly")
 hframes = 3
 vframes = 2
+
+[node name="AttackRange" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackRange"]
+shape = SubResource("CapsuleShape2D_fgo6v")
+
+[node name="AtkSpeed" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+
+[node name="DeathFXSprite" type="Sprite2D" parent="."]
+visible = false
+texture = ExtResource("4_tly7o")
+hframes = 6
+frame = 1
+
+[connection signal="area_entered" from="hurtBox" to="." method="_on_hurt_box_area_entered"]
+[connection signal="area_exited" from="hurtBox" to="." method="_on_hurt_box_area_exited"]
+[connection signal="body_entered" from="detectionArea" to="." method="_on_detection_area_body_entered"]
+[connection signal="body_exited" from="detectionArea" to="." method="_on_detection_area_body_exited"]
+[connection signal="body_entered" from="AttackRange" to="." method="_on_attack_range_body_entered"]
+[connection signal="body_exited" from="AttackRange" to="." method="_on_attack_range_body_exited"]

@@ -18,7 +18,7 @@ func _ready():
 func enable():
 	if !weapon: return
 	#visible = true
-	weapon.enable()
+	#weapon.enable()
 	
 func disable():
 	if !weapon: return

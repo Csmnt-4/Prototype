@@ -36,7 +36,7 @@ var facingAngleDeg : int = 0;
 
 var currenctDirection: Vector2
 
-var mode: String = "Normal" 
+var mode: String = "Normal"
 
 func _ready():
 	effect.play("RESET")
@@ -50,39 +50,30 @@ func handleInput():
 	elif Input.is_action_just_pressed("ui_up"): currenctDirection = Vector2(0,-1)
 	elif Input.is_action_just_pressed("ui_down"): currenctDirection = Vector2(0,1)
 	velocity = moveDirection*speed
-	
-	
+
+
 	if Input.is_action_just_pressed("atk1"):	#LM
-		#print_debug("atk1")
-		animations.play("atk1")
-		isAtking = true
-		#weaponH.visible = true
-		weaponH.enable()
-		await animations.animation_finished
-		#weaponH.visible = false
-		weaponH.disable()
 		weaponH.primary_attack()
-		isAtking = false
+
 
 	if Input.is_action_just_pressed("atk2"):	#RM
 		weaponH.secondary_attack()
-		print_debug("atk2")
-	
+
 	if Input.is_action_just_pressed("interact"): #E
 		#print_debug("interact")
 		try_interact()
-		
+
 	if Input.is_action_just_pressed("specialMove"): #SPACE
 		print_debug("specialMove")
 		velocity = currenctDirection*1000
-	
+
 	if Input.is_action_just_pressed("weapon_change_scroll"):
 		print_debug("change weapon")
 		weaponH.change_weapon()
 
 func updateAnimation():
 	if isAtking: return
-	
+
 	if velocity.length() == 0:
 		if animations.is_playing():
 			animations.stop()
@@ -92,7 +83,7 @@ func updateAnimation():
 		if velocity.x < 0:  direction = "Left"
 		elif velocity.x > 0: direction = "Right"
 		elif velocity.y < 0: direction = "Up"
-		
+
 		animations.play("walk"+direction)
 		standAnimation.play("walk")
 		#lastAnimDirection = direction
@@ -102,21 +93,15 @@ func handleCollision():
 		var collision = get_slide_collision(i)
 		var collider = collision.get_collider()
 		print_debug(collider.name)
-		
+
 
 func _physics_process(delta):
 	facingDir = get_global_mouse_position()
-	var facing_angle_rad = atan2(position.y - get_global_mouse_position().y, 
+	var facing_angle_rad = atan2(position.y - get_global_mouse_position().y,
 		position.x - get_global_mouse_position().x)
-
-	facingAngleDeg = facing_angle_rad/PI*180
-	#weaponH.rotation_degrees = facingAngleDeg
-	#headSprite.rotation_degrees = facingAngleDeg
-	#feetSprite.rotation_degrees = facingAngleDeg
-	#standSprite.rotation_degrees = facingAngleDeg
-	#handSprite.rotation_degrees = facingAngleDeg
+	facingAngleDeg = facing_angle_rad / PI*180
 	rotation_degrees = facingAngleDeg
-	
+	# print(position)
 	handleInput()
 	move_and_slide()
 	handleCollision()
@@ -125,16 +110,16 @@ func _physics_process(delta):
 		for eArea in hurtBox.get_overlapping_areas():
 			if eArea.name == "hitBox":
 				hurtByEnemy(eArea)
-			
+
 
 func hurtByEnemy(area):
 	currentHealth -= 1
 	if currentHealth < 0:
 		currentHealth = maxHealth
-		
+
 	healthChanged.emit(currentHealth)
 	getHurt = true
-		
+
 	knockBack(area.get_parent().velocity)
 	effect.play("HurtBlink")
 	hurtTimer.start()
@@ -146,12 +131,12 @@ func _on_hurt_box_area_entered(area):
 	if area.has_method("collect"):
 		area.collect()
 
-		
+
 func knockBack(enemyVel: Vector2):
 	var knockBackDirection = (enemyVel - velocity).normalized() * knockBackDist
 	velocity = knockBackDirection
 	move_and_slide()
-	
+
 
 
 func _on_hurt_box_area_exited(area):
@@ -161,7 +146,7 @@ func _on_hurt_box_area_exited(area):
 func try_interact():
 	'''
 	rayCast.cast_to = facingDir * interactDist
-	
+
 	if rayCast.is_colliding():
 		if rayCast.get_collider() is KinematicBody2D:
 			rayCast.get_collider().take_damage(damage)
@@ -169,7 +154,7 @@ func try_interact():
 			rayCast.get_collider().on_interact(self)
 	'''
 	pass
-	
+
 func give_gold (amount):
 	#gold += amount
 	pass

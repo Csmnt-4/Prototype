@@ -3,16 +3,19 @@ extends CharacterBody2D
 @export var speed = 20
 @export var limit = 0.5
 @export var endPoint: Marker2D
+@export var attackSpeedTimer : Timer
 
 @onready var animations = $AnimationPlayer
 
+
 var startPosition: Vector2
 var endPosition: Vector2
-
+"endPoint"
 var isDead: bool = false
 
 var playerChase = false
-var player = null
+var playerAttack = false
+var player : CharacterBody2D = null
 
 func _ready():
 	startPosition = position
@@ -27,38 +30,32 @@ func updateVelocity():
 	var moveDirection: Vector2 = endPosition - position
 	if moveDirection.length() < limit:
 		position =  endPosition
-		#moveDirection = Vector2(0,0)
+		moveDirection = Vector2(0,0)
 		changeDirection()
-	
+
 	velocity = moveDirection.normalized()*speed
-	
-func updateAnimation():	
+
+func updateAnimation():
 	if velocity.length() == 0:
 		if animations.is_playing():
 			animations.stop()
 	else:
-		var direction: String = "Down"
-		if velocity.x < 0:  direction = "Left"
-		elif velocity.x > 0: direction = "Right"
-		elif velocity.y < 0: direction = "Up"
-		
-		animations.play("walk"+direction)	
-	
+		animations.play("walk")
+
 func _physics_process(delta):
 	if isDead: return
-	
+
 	if (playerChase):
-		position += (player.position - position)/50
-		move_and_collide(Vector2(0,0))
+		chase()
+	if (playerAttack):
+		attack()
 	else:
 		updateVelocity()
 		move_and_slide()
 		updateAnimation()
-	
-
-
 
 func _on_hurt_box_area_entered(area):
+	print("hurt box area entered")
 	if area == $hitBox: return
 	print_debug("hurt!! mon")
 	$hitBox.set_deferred("monitorable", false)
@@ -74,7 +71,6 @@ func _on_hurt_box_area_exited(area):
 
 
 func _on_detection_area_body_entered(body):
-	print(body)
 	if (body.name == "Player"):
 		player = body
 		playerChase = true
@@ -85,4 +81,23 @@ func _on_detection_area_body_exited(body):
 		player = null
 		playerChase = false
 
-	
+func chase():
+	#print("chasing")
+	position += (player.position - position)/50
+	move_and_collide(Vector2(0,0))
+
+func attack():
+	if (attackSpeedTimer.time_left > 0):
+		return
+	print("attackkkkkk")
+	animations.play("attack")
+	attackSpeedTimer.start()
+
+func _on_attack_range_body_entered(body):
+	if (body.name == "Player"):
+		playerAttack = true
+
+
+func _on_attack_range_body_exited(body):
+	if (body.name == "Player"):
+		playerAttack = false

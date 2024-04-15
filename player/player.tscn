@@ -591,6 +591,6 @@ texture = ExtResource("8_7vk7o")
 hframes = 11
 vframes = 11
 
-[connection signal="area_entered" from="hurtBox" to="." method="_on_hit_box_area_entered"]
 [connection signal="area_entered" from="hurtBox" to="." method="_on_hurt_box_area_entered"]
+[connection signal="area_entered" from="hurtBox" to="." method="_on_hit_box_area_entered"]
 [connection signal="area_exited" from="hurtBox" to="." method="_on_hurt_box_area_exited"]

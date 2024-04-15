@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=3 uid="uid://dj0j38cxyrwnj"]
+[gd_scene load_steps=35 format=3 uid="uid://dj0j38cxyrwnj"]
 
 [ext_resource type="Script" path="res://scene/world.gd" id="1_3puym"]
 [ext_resource type="PackedScene" uid="uid://dt1isj2atp4r4" path="res://player/player.tscn" id="1_tqd05"]
@@ -21,6 +21,7 @@
 [ext_resource type="PackedScene" uid="uid://bey32xxcdr024" path="res://enemies/tomato.tscn" id="12_0ckir"]
 [ext_resource type="Texture2D" uid="uid://uvb5804ou4wg" path="res://art/maps/Fridge.png" id="12_dqiim"]
 [ext_resource type="Texture2D" uid="uid://venf43qsclp0" path="res://art/maps/Counter Top.png" id="13_xlggl"]
+[ext_resource type="AudioStream" uid="uid://jvpk1ic02onu" path="res://sounds/Kitchen_Hell_In-Game_Music.wav" id="22_v50w5"]
 
 [sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_dcnmf"]
 scenes/1/scene = ExtResource("2_dejgs")
@@ -2987,3 +2988,7 @@ scale = Vector2(0.966903, 1.05761)
 
 [node name="heartsContainer" parent="CanvasLayer" instance=ExtResource("7_n7k2x")]
 layout_direction = 2
+
+[node name="bgm" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("22_v50w5")
+volume_db = -16.0

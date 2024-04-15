@@ -6,6 +6,7 @@ extends CharacterBody2D
 @export var attackSpeedTimer : Timer
 
 @onready var animations = $AnimationPlayer
+@onready var pop_sound = $popSound
 
 
 var startPosition: Vector2
@@ -61,6 +62,7 @@ func _on_hurt_box_area_entered(area):
 	$hitBox.set_deferred("monitorable", false)
 	$CollisionShape2D.set_deferred("monitorable", false)
 	isDead = true
+	pop_sound.play()
 	animations.play("deathAnimation")
 	await animations.animation_finished
 	queue_free()

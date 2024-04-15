@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://dt1isj2atp4r4"]
+[gd_scene load_steps=31 format=3 uid="uid://dt1isj2atp4r4"]
 
 [ext_resource type="Script" path="res://player/player.gd" id="1_0ty5h"]
 [ext_resource type="Texture2D" uid="uid://bln4ikcalamqs" path="res://art/Player.png" id="2_u575h"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://df3b6u1glf712" path="res://weapons/Spoon.tscn" id="5_8dq0c"]
 [ext_resource type="PackedScene" uid="uid://ca518xpkrn27p" path="res://weapons/Fork.tscn" id="6_6lncc"]
 [ext_resource type="PackedScene" uid="uid://j7kqol8q1780" path="res://weapons/Knife.tscn" id="7_5tiip"]
+[ext_resource type="AudioStream" uid="uid://dksy0q1jiv7b3" path="res://sounds/slash.wav" id="8_1tq6k"]
 [ext_resource type="Texture2D" uid="uid://db46v1k2hadln" path="res://art/KitchenHell_Rat_Movement_ByLayers.png" id="8_7vk7o"]
 
 [sub_resource type="Animation" id="Animation_ysoh6"]
@@ -590,6 +591,9 @@ visible = false
 texture = ExtResource("8_7vk7o")
 hframes = 11
 vframes = 11
+
+[node name="slashSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("8_1tq6k")
 
 [connection signal="area_entered" from="hurtBox" to="." method="_on_hurt_box_area_entered"]
 [connection signal="area_entered" from="hurtBox" to="." method="_on_hit_box_area_entered"]

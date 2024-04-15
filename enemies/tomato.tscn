@@ -1,9 +1,10 @@
-[gd_scene load_steps=14 format=3 uid="uid://bey32xxcdr024"]
+[gd_scene load_steps=15 format=3 uid="uid://bey32xxcdr024"]
 
 [ext_resource type="Script" path="res://enemies/tomato.gd" id="1_hoffn"]
 [ext_resource type="Texture2D" uid="uid://cc4vd18ikf30a" path="res://art/HellKitchen_Tomato-SheeItIdle.png" id="2_1h6ly"]
 [ext_resource type="PackedScene" uid="uid://b18mbr0rtm5w1" path="res://enemies/tomatoprojectile.tscn" id="2_lq106"]
 [ext_resource type="Texture2D" uid="uid://dkud3wfv863fc" path="res://art/death.png" id="4_tly7o"]
+[ext_resource type="AudioStream" uid="uid://kxf21jn4ob0b" path="res://sounds/pop.wav" id="5_g7yhe"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ic04a"]
 radius = 21.0
@@ -166,6 +167,9 @@ visible = false
 texture = ExtResource("4_tly7o")
 hframes = 6
 frame = 1
+
+[node name="popSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_g7yhe")
 
 [connection signal="area_entered" from="hurtBox" to="." method="_on_hurt_box_area_entered"]
 [connection signal="area_exited" from="hurtBox" to="." method="_on_hurt_box_area_exited"]

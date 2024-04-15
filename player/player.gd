@@ -18,6 +18,9 @@ signal healthChanged
 
 @onready var rayCast = $RayCast2D
 
+@onready var slash_sound = $slashSound
+
+
 @export var maxHealth: int = 3
 @onready var currentHealth: int = maxHealth
 var isAlive: bool = true
@@ -54,10 +57,12 @@ func handleInput():
 
 	if Input.is_action_just_pressed("atk1"):	#LM
 		weaponH.primary_attack()
+		slash_sound.play()
 
 
 	if Input.is_action_just_pressed("atk2"):	#RM
 		weaponH.secondary_attack()
+		slash_sound.play()
 
 	if Input.is_action_just_pressed("interact"): #E
 		#print_debug("interact")

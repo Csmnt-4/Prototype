@@ -1,8 +1,9 @@
-[gd_scene load_steps=15 format=3 uid="uid://g22rock0hgff"]
+[gd_scene load_steps=16 format=3 uid="uid://g22rock0hgff"]
 
 [ext_resource type="Script" path="res://enemies/mons.gd" id="1_n546i"]
 [ext_resource type="Texture2D" uid="uid://buiqnxacsypt2" path="res://art/mushroom.png" id="2_iheam"]
 [ext_resource type="Texture2D" uid="uid://dkud3wfv863fc" path="res://art/death.png" id="3_edyww"]
+[ext_resource type="AudioStream" uid="uid://kxf21jn4ob0b" path="res://sounds/pop.wav" id="4_m1nih"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_g4wqg"]
 radius = 5.0
@@ -284,7 +285,7 @@ height = 20.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_1yd8v"]
 radius = 36.0139
 
-[node name="Mon1" type="CharacterBody2D"]
+[node name="Mon" type="CharacterBody2D"]
 z_index = 1
 collision_layer = 2
 collision_mask = 2
@@ -337,6 +338,9 @@ hframes = 6
 position = Vector2(0, -6)
 shape = SubResource("CircleShape2D_1yd8v")
 debug_color = Color(0.552941, 0.54902, 0.337255, 0.419608)
+
+[node name="popSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_m1nih")
 
 [connection signal="area_entered" from="hurtBox" to="." method="_on_hurt_box_area_entered"]
 [connection signal="area_exited" from="hurtBox" to="." method="_on_hurt_box_area_exited"]

@@ -106,11 +106,11 @@ radius = 20.6155
 radius = 21.095
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_s6l80"]
-radius = 125.0
+radius = 231.698
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_fgo6v"]
-radius = 78.0
-height = 156.0
+radius = 234.0
+height = 468.0
 
 [node name="Tomato" type="CharacterBody2D" node_paths=PackedStringArray("attackSpeedTimer")]
 collision_layer = 2
@@ -144,6 +144,7 @@ shape = SubResource("CircleShape2D_582c7")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="detectionArea"]
 shape = SubResource("CircleShape2D_s6l80")
+debug_color = Color(0.85098, 0.321569, 0.490196, 0.419608)
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(2, -3)

@@ -3,6 +3,21 @@
 [ext_resource type="Script" path="res://StartScreen.gd" id="1_dlwir"]
 [ext_resource type="Texture2D" uid="uid://bdac7nahm0rjn" path="res://art/Logo_art-Sheet.png" id="2_c24jg"]
 
+[sub_resource type="Animation" id="Animation_0kg8k"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [4]
+}
+
 [sub_resource type="Animation" id="Animation_0cdnm"]
 resource_name = "start"
 length = 0.45
@@ -17,21 +32,6 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1),
 "update": 1,
 "values": [4, 3, 2, 1, 0]
-}
-
-[sub_resource type="Animation" id="Animation_0kg8k"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [4]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_ghc3u"]

@@ -102,6 +102,7 @@ func handleCollision():
 
 
 func _physics_process(delta):
+	if (!isAlive): return
 	facingDir = get_global_mouse_position()
 	var facing_angle_rad = atan2(position.y - get_global_mouse_position().y,
 		position.x - get_global_mouse_position().x)
@@ -121,7 +122,10 @@ func _physics_process(delta):
 func hurtByEnemy(area):
 	currentHealth -= 1
 	if(currentHealth == 0):
+		isAlive = false
+		visible = false
 		playerDeath.emit()
+
 
 	healthChanged.emit(currentHealth)
 	getHurt = true

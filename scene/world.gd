@@ -22,11 +22,15 @@ func _input(event):
 		get_tree().change_scene_to_file("res://gui/start_screen.tscn")
 
 func connect_enemy_event(_signal):
+	print("connecting new enemy")
 	_signal.connect(get_node("CanvasLayer/goalContainer").enemy_death)
 
 func _on_goal_container_on_goal_done():
+	get_node("CanvasLayer/GameOverText").text = "Game Over! You win!"
+	get_node("CanvasLayer/GameOverText").visible = true
 	print("game finished!")
 
 func _on_player_player_death():
+	get_node("CanvasLayer/GameOverText").text="Game Over! You lose!"
 	get_node("CanvasLayer/GameOverText").visible = true
 	print("game over")

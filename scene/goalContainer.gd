@@ -27,7 +27,7 @@ func _process(delta):
 
 func enemy_death(name):
 	print("enemy_death_trigger " + name)
-	if (name.contains("Mons")):
+	if (name.contains("Mushroom")):
 		mushroomKilled += 1
 		mushroomText.set_text("Mushroom: " + str(mushroomKilled) + "/" + str(mushroomGoal))
 	elif name.contains("Lettuce"):
@@ -40,9 +40,9 @@ func enemy_death(name):
 		tomatoKilled += 1
 		tomatoTxt.set_text("Tomatoes: " + str(tomatoKilled) + "/" + str(tomatoGoal))
 
-	if (mushroomKilled == mushroomGoal and \
-		lettuceKilled == lettuceGoal and \
-		cheeseKilled == cheeseGoal and \
-		tomatoKilled == tomatoGoal):
+	if (mushroomKilled >= mushroomGoal and \
+		lettuceKilled >= lettuceGoal and \
+		cheeseKilled >= cheeseGoal and \
+		tomatoKilled >= tomatoGoal):
 			on_goal_done.emit()
 

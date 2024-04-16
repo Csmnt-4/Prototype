@@ -129,10 +129,12 @@ radius = 121.264
 radius = 38.3275
 
 [node name="Lettuce" type="CharacterBody2D" node_paths=PackedStringArray("attackSpeedTimer")]
-collision_layer = 2
-collision_mask = 2
+scale = Vector2(0.7, 0.7)
+collision_layer = 3
+collision_mask = 3
 script = ExtResource("1_78y54")
 attackSpeedTimer = NodePath("AtkSpeed")
+mon_name = "Lettuce"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 3)

@@ -4,6 +4,7 @@ extends CharacterBody2D
 @export var limit = 0.5
 @export var endPoint: Marker2D
 @export var attackSpeedTimer : Timer
+@export var mon_name: String
 
 @onready var animations = $AnimationPlayer
 @onready var pop_sound = $popSound
@@ -33,7 +34,7 @@ func changeDirection():
 func updateVelocity():
 	var moveDirection: Vector2 = endPosition - position
 	if moveDirection.length() < limit:
-		position =  endPosition
+		position = endPosition
 		moveDirection = Vector2(0,0)
 		changeDirection()
 
@@ -61,7 +62,7 @@ func _physics_process(delta):
 func _on_hurt_box_area_entered(area):
 	print("hurt box area entered")
 	if area == $hitBox: return
-	print_debug("hurt!! mon, " + name)
+	print_debug("hurt!! mon, " + mon_name)
 	$hitBox.set_deferred("monitorable", false)
 	$CollisionShape2D.set_deferred("monitorable", false)
 	isDead = true
@@ -69,7 +70,7 @@ func _on_hurt_box_area_entered(area):
 	animations.play("deathAnimation")
 	await animations.animation_finished
 	queue_free()
-	on_death.emit(name)
+	on_death.emit(mon_name)
 
 
 func _on_hurt_box_area_exited(area):

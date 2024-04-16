@@ -3,6 +3,7 @@ extends CharacterBody2D
 class_name Player
 
 signal healthChanged
+signal playerDeath
 
 
 @export var speed: int = 35
@@ -119,8 +120,8 @@ func _physics_process(delta):
 
 func hurtByEnemy(area):
 	currentHealth -= 1
-	if currentHealth < 0:
-		currentHealth = maxHealth
+	if(currentHealth == 0):
+		playerDeath.emit()
 
 	healthChanged.emit(currentHealth)
 	getHurt = true
@@ -131,6 +132,8 @@ func hurtByEnemy(area):
 	await hurtTimer.timeout
 	effect.play("RESET")
 	getHurt = false
+
+
 
 func _on_hurt_box_area_entered(area):
 	if area.has_method("collect"):
